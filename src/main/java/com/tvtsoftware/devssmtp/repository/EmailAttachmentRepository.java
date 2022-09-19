@@ -1,6 +1,6 @@
 package com.tvtsoftware.devssmtp.repository;
 
-import com.tvtsoftware.fakesmtp.model.EmailAttachment;
+import com.tvtsoftware.devssmtp.model.EmailAttachment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
