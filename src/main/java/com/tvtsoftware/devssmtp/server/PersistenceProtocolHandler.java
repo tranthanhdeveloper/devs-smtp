@@ -5,6 +5,9 @@ import com.tvtsoftware.devssmtp.model.Email;
 import com.tvtsoftware.devssmtp.repository.EmailRepository;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.mail.util.MimeMessageUtils;
+import org.apache.james.mime4j.util.MimeUtil;
 import org.apache.james.protocols.smtp.MailEnvelope;
 import org.apache.james.protocols.smtp.SMTPSession;
 import org.apache.james.protocols.smtp.hook.HookResult;
@@ -36,7 +39,8 @@ public class PersistenceProtocolHandler implements MessageHook {
         try {
             Session defaultSession = Session.getDefaultInstance(new Properties());
             MimeMessage mimeMessage = new MimeMessage(defaultSession, mailEnvelope.getMessageInputStream());
-            MultipartHandler handler = multipartHandlerResolver.resolve(mimeMessage.getContentType());
+            String extractedMimeContentType = StringUtils.defaultString(mimeMessage.getContentType().split(";")[0], "");
+            MultipartHandler handler = multipartHandlerResolver.resolve(extractedMimeContentType);
             if (Objects.nonNull(handler)) {
                 Email email = handler.processEmail(mimeMessage);
                 emailRepository.save(email);

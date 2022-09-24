@@ -12,16 +12,20 @@ public class EmailAttachment {
     @GeneratedValue(generator = "email_attachment_generator")
     private Long id;
 
-    @ManyToOne(fetch= FetchType.LAZY, optional = false)
-    @JoinColumn(name="email")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "email")
     private Email email;
 
-    @Column(name="filename", nullable = false, length = 1024)
+    @Column(name = "filename", nullable = false, length = 1024)
     @Basic(optional = false)
     private String filename;
 
+    @Column(name = "content_type", nullable = false, length = 1024)
+    @Basic(optional = false)
+    private String contenttype;
+
     @Lob
-    @Column(name="data", nullable = false)
+    @Column(name = "data", nullable = false)
     @Basic(optional = false)
     private byte[] data;
 
@@ -48,6 +52,14 @@ public class EmailAttachment {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getContenttype() {
+        return contenttype;
+    }
+
+    public void setContenttype(String contenttype) {
+        this.contenttype = contenttype;
     }
 
     public byte[] getData() {

@@ -1,27 +1,42 @@
 package com.tvtsoftware.devssmtp.handler;
 
 import com.tvtsoftware.devssmtp.model.Email;
-import org.apache.commons.io.IOUtils;
+import com.tvtsoftware.devssmtp.model.EmailAttachment;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.mail.util.MimeMessageParser;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
+import javax.activation.DataSource;
 import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Component
+@Slf4j
 public class TextPlainHandlerImpl implements MultipartHandler {
     @Override
     public Email processEmail(MimeMessage mimeMessage) {
         try {
             Email email = new Email();
-            email.setSubject(mimeMessage.getSubject());
-            email.setRawData(IOUtils.toString(mimeMessage.getRawInputStream(), StandardCharsets.UTF_8));
-            email.setReceivedOn(mimeMessage.getReceivedDate());
-            email.setFromAddress(mimeMessage.getFrom()[0].toString());
+            MimeMessageParser mimeMessageParser = new MimeMessageParser(mimeMessage);
+            email.setSubject(mimeMessageParser.getSubject());
+            email.setRawData(mimeMessageParser.getPlainContent());
+            email.setReceivedOn(mimeMessageParser.getMimeMessage().getReceivedDate());
+            email.setFromAddress(mimeMessageParser.getFrom());
+            if (mimeMessageParser.hasAttachments()) {
+                List<DataSource> attachmentList = mimeMessageParser.getAttachmentList();
+                for (DataSource dataSource : attachmentList) {
+                    EmailAttachment attachment = new EmailAttachment();
+                    attachment.setEmail(email);
+                    attachment.setData(dataSource.getInputStream().readAllBytes());
+                    attachment.setFilename(dataSource.getName());
+                    attachment.setContenttype(dataSource.getContentType());
+                    email.addAttachment(attachment);
+                }
+            }
             return email;
-        } catch (MessagingException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            log.warn("Parsing mime-message from receiving email cause error {}", e.getMessage());
+            return null;
         }
     }
 }

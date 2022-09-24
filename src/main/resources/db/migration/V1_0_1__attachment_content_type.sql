@@ -1,0 +1,1 @@
+ALTER TABLE email_attachment ADD content_type VARCHAR(255);
