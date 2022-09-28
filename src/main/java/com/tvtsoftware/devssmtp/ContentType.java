@@ -1,4 +1,4 @@
-package com.tvtsoftware.devssmtp.model;
+package com.tvtsoftware.devssmtp;
 
 public enum ContentType {
     HTML("multipart/alternative"),

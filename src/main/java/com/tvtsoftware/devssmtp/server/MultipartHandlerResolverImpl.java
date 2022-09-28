@@ -18,7 +18,7 @@ public class MultipartHandlerResolverImpl implements MultipartHandlerResolver {
     @Override
     public MultipartHandler resolve(String contentType) {
         log.info("Resolving handler");
-        if (handler.containsKey(contentType)) {
+        if (!handler.containsKey(contentType)) {
             log.info("No handler found for content type {}", contentType);
             return null;
         }

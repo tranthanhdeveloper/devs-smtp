@@ -1,5 +1,7 @@
 package com.tvtsoftware.devssmtp.model;
 
+import com.tvtsoftware.devssmtp.ContentType;
+
 import javax.persistence.*;
 
 @Entity

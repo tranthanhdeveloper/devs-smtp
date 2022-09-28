@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.activation.DataSource;
 import javax.mail.internet.MimeMessage;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -18,10 +19,12 @@ public class TextPlainHandlerImpl implements MultipartHandler {
         try {
             Email email = new Email();
             MimeMessageParser mimeMessageParser = new MimeMessageParser(mimeMessage);
+            mimeMessageParser.parse();
             email.setSubject(mimeMessageParser.getSubject());
-            email.setRawData(mimeMessageParser.getPlainContent());
-            email.setReceivedOn(mimeMessageParser.getMimeMessage().getReceivedDate());
+            email.setRawData(mimeMessageParser.getHtmlContent());
+            email.setReceivedOn(new Date());
             email.setFromAddress(mimeMessageParser.getFrom());
+            email.setToAddress(mimeMessageParser.getTo().get(0).toString());
             if (mimeMessageParser.hasAttachments()) {
                 List<DataSource> attachmentList = mimeMessageParser.getAttachmentList();
                 for (DataSource dataSource : attachmentList) {
