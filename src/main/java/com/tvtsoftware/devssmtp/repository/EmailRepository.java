@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 @Repository
-public interface EmailRepository extends JpaRepository<Email,Long>{
+public interface EmailRepository extends JpaRepository<Email, Long> {
 
     @Transactional
     int deleteEmailByReceivedOnBefore(Date receivedTime);

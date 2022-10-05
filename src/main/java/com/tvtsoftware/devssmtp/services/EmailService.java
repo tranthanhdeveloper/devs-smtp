@@ -1,10 +1,11 @@
 package com.tvtsoftware.devssmtp.services;
 
 import com.tvtsoftware.devssmtp.model.Email;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface EmailService {
 
-    List<Email> getAllEmailWithPaging(int page);
+    Page<Email> getAllEmailWithPaging(int page);
+
+    Email getEmailByUID(Long id);
 }

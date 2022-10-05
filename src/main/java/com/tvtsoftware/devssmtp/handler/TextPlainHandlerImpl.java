@@ -1,7 +1,9 @@
 package com.tvtsoftware.devssmtp.handler;
 
+import com.tvtsoftware.devssmtp.ContentType;
 import com.tvtsoftware.devssmtp.model.Email;
 import com.tvtsoftware.devssmtp.model.EmailAttachment;
+import com.tvtsoftware.devssmtp.model.EmailContent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.mail.util.MimeMessageParser;
 import org.springframework.stereotype.Component;
@@ -36,6 +38,10 @@ public class TextPlainHandlerImpl implements MultipartHandler {
                     email.addAttachment(attachment);
                 }
             }
+            EmailContent emailContent = new EmailContent();
+            emailContent.setContentType(ContentType.valueOf(mimeMessage.getContentType().split(";")[0]));
+            emailContent.setData(mimeMessageParser.getHtmlContent());
+            email.addContent(emailContent);
             return email;
         } catch (Exception e) {
             log.warn("Parsing mime-message from receiving email cause error {}", e.getMessage());
