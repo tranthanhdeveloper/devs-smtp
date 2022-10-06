@@ -1,7 +1,11 @@
 package com.tvtsoftware.devssmtp;
 
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public enum ContentType {
-    HTML("multipart/alternative"),
     PLAIN("text/plain"),
     MULTIPART_ALTERNATIVE("multipart/alternative"),
     MULTIPART_MIXED("multipart/mixed"),
@@ -10,7 +14,14 @@ public enum ContentType {
     UNDEFINED("");
     private String value;
 
+    private static final Map<String, ContentType> MAP = Stream.of(ContentType.values()).collect(Collectors.toMap(ContentType::getValue, Function.identity()));
+
+    public static ContentType fromValue(String value) {
+        return MAP.get(value);
+    }
+
     ContentType(String value) {
+        this.value = value;
     }
 
     public String getValue() {

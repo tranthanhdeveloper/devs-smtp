@@ -39,7 +39,7 @@ public class TextPlainHandlerImpl implements MultipartHandler {
                 }
             }
             EmailContent emailContent = new EmailContent();
-            emailContent.setContentType(ContentType.valueOf(mimeMessage.getContentType().split(";")[0]));
+            emailContent.setContentType(ContentType.fromValue(mimeMessage.getContentType().split(";")[0]));
             emailContent.setData(mimeMessageParser.getHtmlContent());
             email.addContent(emailContent);
             return email;

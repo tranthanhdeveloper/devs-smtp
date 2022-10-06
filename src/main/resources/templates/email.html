@@ -30,16 +30,16 @@
                     </dl>
 
                     <ul class="nav nav-tabs" id="mail-tabs" role="tablist">
-                        <li class="nav-item" role="presentation" th:each="c,is : ${mail.}">
-                            <button class="nav-link" th:classappend="${is.first} ? 'active' : ''" data-bs-toggle="tab" th:attr="data-bs-target='#mail-content-'+${c.id}" th:text="${c.contentType}">type</button>
+                        <li class="nav-item" role="presentation" th:each="c,is : ${mail.contents}">
+                            <button class="nav-link" th:classappend="${is.first} ? 'active' : ''" data-bs-toggle="tab" th:attr="data-bs-target='#mail-content-'+${c.getId()}" th:text="${c.getContentType()}">type</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mail-content-raw">Raw</button>
                         </li>
                     </ul>
                     <div class="tab-content p-3" id="mail-tabs-content">
-                        <div class="tab-pane fade" th:each="c,is : ${mail.rawData}" th:id="'mail-content-'+${c.id}" th:classappend="${is.first} ? 'show active' : ''">
-                            <div th:if="${c. == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:utext="${mail.rawData}"></div>
+                        <div class="tab-pane fade" th:each="c,is : ${mail.contents}" th:id="'mail-content-'+${c.id}" th:classappend="${is.first} ? 'show active' : ''">
+                            <div th:if="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:utext="${mail.rawData}"></div>
                             <object th:unless="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:attr="srcdoc=${mail.rawData}" sandbox="allow-same-origin" onload="resizeIframe(this)"></object>
                         </div>
                         <div class="tab-pane fade" id="mail-content-raw">

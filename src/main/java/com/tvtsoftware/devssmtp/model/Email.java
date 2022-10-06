@@ -117,7 +117,7 @@ public class Email {
 
     @JsonIgnore
     public Optional<EmailContent> getHtmlContent(){
-        return getContentOfType(ContentType.HTML);
+        return getContentOfType(ContentType.MULTIPART_ALTERNATIVE);
     }
 
     private Optional<EmailContent> getContentOfType(ContentType contentType){
