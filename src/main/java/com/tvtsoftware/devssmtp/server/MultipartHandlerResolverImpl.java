@@ -15,13 +15,19 @@ public class MultipartHandlerResolverImpl implements MultipartHandlerResolver {
     @Qualifier(value = "multipartHandlerResolverMap")
     private Map<String, MultipartHandler> handler;
 
+    @Autowired
+    @Qualifier(value = "textPlainHandlerImpl")
+    private MultipartHandler multipartHandler;
+
     @Override
     public MultipartHandler resolve(String contentType) {
         log.info("Resolving handler");
         if (!handler.containsKey(contentType)) {
             log.info("No handler found for content type {}", contentType);
-            return null;
+            return multipartHandler;
         }
         return handler.get(contentType);
     }
+
+
 }
