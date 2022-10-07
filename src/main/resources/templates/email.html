@@ -43,7 +43,7 @@
                             <object th:unless="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:attr="srcdoc=${mail.rawBody}" sandbox="allow-same-origin" onload="resizeIframe(this)"></object>
                         </div>
                         <div class="tab-pane fade" id="mail-content-raw">
-                            <pre class="card-content" th:text="${mail.rawBody}"></pre>
+                            <pre class="card-content" th:text="${mail.raw}"></pre>
                         </div>
                     </div>
                 </div>

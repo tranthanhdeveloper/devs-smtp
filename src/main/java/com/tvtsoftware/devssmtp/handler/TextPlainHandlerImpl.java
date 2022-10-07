@@ -5,11 +5,13 @@ import com.tvtsoftware.devssmtp.model.Email;
 import com.tvtsoftware.devssmtp.model.EmailAttachment;
 import com.tvtsoftware.devssmtp.model.EmailContent;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.mail.util.MimeMessageParser;
 import org.springframework.stereotype.Component;
 
 import javax.activation.DataSource;
 import javax.mail.internet.MimeMessage;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class TextPlainHandlerImpl implements MultipartHandler {
             MimeMessageParser mimeMessageParser = new MimeMessageParser(mimeMessage);
             mimeMessageParser.parse();
             email.setSubject(mimeMessageParser.getSubject());
+            email.setRaw(IOUtils.toString(mimeMessage.getRawInputStream(), StandardCharsets.UTF_8));
             email.setRawBody(mimeMessageParser.getHtmlContent());
             email.setReceivedOn(new Date());
             email.setFromAddress(mimeMessageParser.getFrom());

@@ -166,4 +166,12 @@ public class Email {
     public int hashCode() {
         return id.hashCode();
     }
+
+    public String getRaw() {
+        return raw;
+    }
+
+    public void setRaw(String raw) {
+        this.raw = raw;
+    }
 }
