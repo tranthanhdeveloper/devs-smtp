@@ -23,7 +23,7 @@ public class TextPlainHandlerImpl implements MultipartHandler {
             MimeMessageParser mimeMessageParser = new MimeMessageParser(mimeMessage);
             mimeMessageParser.parse();
             email.setSubject(mimeMessageParser.getSubject());
-            email.setRawData(mimeMessageParser.getHtmlContent());
+            email.setRawBody(mimeMessageParser.getHtmlContent());
             email.setReceivedOn(new Date());
             email.setFromAddress(mimeMessageParser.getFrom());
             email.setToAddress(mimeMessageParser.getTo().get(0).toString());
