@@ -7,25 +7,31 @@ import com.tvtsoftware.devssmtp.model.EmailContent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.mail.util.MimeMessageParser;
+import org.apache.james.protocols.smtp.MailEnvelope;
 import org.springframework.stereotype.Component;
 
 import javax.activation.DataSource;
+import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 @Component
 @Slf4j
 public class TextPlainHandlerImpl implements MultipartHandler {
     @Override
-    public Email processEmail(MimeMessage mimeMessage) {
+    public Email processEmail(MailEnvelope mailEnvelope) {
         try {
-            Email email = new Email();
+            Session defaultSession = Session.getDefaultInstance(new Properties());
+            MimeMessage mimeMessage = new MimeMessage(defaultSession, mailEnvelope.getMessageInputStream());
             MimeMessageParser mimeMessageParser = new MimeMessageParser(mimeMessage);
             mimeMessageParser.parse();
+
+            Email email = new Email();
             email.setSubject(mimeMessageParser.getSubject());
-            email.setRaw(IOUtils.toString(mimeMessage.getRawInputStream(), StandardCharsets.UTF_8));
+            email.setRaw(IOUtils.toString(mailEnvelope.getMessageInputStream(), StandardCharsets.UTF_8));
             email.setRawBody(mimeMessageParser.getHtmlContent());
             email.setReceivedOn(new Date());
             email.setFromAddress(mimeMessageParser.getFrom());

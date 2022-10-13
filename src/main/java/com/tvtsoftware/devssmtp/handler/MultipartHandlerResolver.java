@@ -1,4 +1,4 @@
-package com.tvtsoftware.devssmtp.server;
+package com.tvtsoftware.devssmtp.handler;
 
 import com.tvtsoftware.devssmtp.handler.MultipartHandler;
 
