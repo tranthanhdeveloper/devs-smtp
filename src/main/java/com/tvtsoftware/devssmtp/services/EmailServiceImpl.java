@@ -22,8 +22,8 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public Page<Email> getAllEmailWithPaging(int page) {
-        PageRequest pageRequest = PageRequest.of(page, DEFAULT_PAGE_SIZE);
-        pageRequest.withSort(Sort.by(Sort.Direction.DESC, "id"));
+        PageRequest pageRequest = PageRequest.of(page, DEFAULT_PAGE_SIZE)
+                .withSort(Sort.by(Sort.Direction.DESC, "receivedOn"));
         Page<Email> result = emailRepository.findAll(pageRequest);
         return result;
     }
