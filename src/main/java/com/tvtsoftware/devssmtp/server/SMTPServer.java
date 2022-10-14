@@ -3,8 +3,6 @@ package com.tvtsoftware.devssmtp.server;
 
 import com.tvtsoftware.devssmtp.config.SmtpServerProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.james.metrics.api.MetricFactory;
-import org.apache.james.metrics.api.NoopGaugeRegistry;
 import org.apache.james.metrics.api.NoopMetricFactory;
 import org.apache.james.protocols.api.Protocol;
 import org.apache.james.protocols.api.handler.ProtocolHandler;
@@ -12,17 +10,10 @@ import org.apache.james.protocols.netty.NettyServer;
 import org.apache.james.protocols.smtp.SMTPConfigurationImpl;
 import org.apache.james.protocols.smtp.SMTPProtocol;
 import org.apache.james.protocols.smtp.SMTPProtocolHandlerChain;
-import org.apache.james.smtpserver.netty.SmtpMetrics;
-import org.apache.james.smtpserver.netty.SmtpMetricsImpl;
 import org.jboss.netty.util.HashedWheelTimer;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.net.InetSocketAddress;
 import java.util.Collection;
 
