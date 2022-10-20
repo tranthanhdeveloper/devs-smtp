@@ -63,10 +63,10 @@
                 <p>Do you really want to delete all emails?</p>
             </div>
             <div class="modal-footer">
-                <th:form th:action="@{'/email/delete-all'}" th:method="delete" class="inline">
-                    <button class="btn btn-danger"  type="submit">Yes, I am sure to delete all emails</button>
+                <form th:action="@{'/email/delete-all'}" method="post" class="inline">
+                    <input class="btn btn-danger" type="submit" value="Yes, I am sure to delete all emails"/>
                     <button class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                </th:form>
+                </form>
             </div>
         </div>
     </div>
