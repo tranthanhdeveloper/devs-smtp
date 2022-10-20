@@ -6,8 +6,8 @@
 <body>
     <nav class="navbar fixed-top navbar-dark bg-primary bg-gradient" th:fragment="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><i class="material-icons">email</i><span>DevsSMTP</span></a>
-            <span class="d-flex navbar-text" th:text="${'Version: ' + appVersion}"></span>
+            <a class="navbar-brand" href="/"><i class="material-icons">email</i><span>Devs SMTP</span></a>
+            <span class="d-flex navbar-text" th:text="${'Version: ' + @environment.getProperty('devssmtp.app.version')}"></span>
         </div>
     </nav>
 </body>

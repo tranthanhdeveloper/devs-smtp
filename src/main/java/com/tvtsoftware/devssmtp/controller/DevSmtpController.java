@@ -5,6 +5,7 @@ import com.tvtsoftware.devssmtp.services.EmailService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -29,5 +30,17 @@ public class DevSmtpController {
         Email email = emailService.getEmailByUID(id);
         model.addAttribute("mail", email);
         return "email";
+    }
+
+    @GetMapping(value = "/email/delete/{id}")
+    public String deleteEmail(@PathVariable("id") Long id) {
+        emailService.deleteEmailByUID(id);
+        return "redirect:/";
+    }
+
+    @DeleteMapping(value = "/email/delete-all")
+    public String deleteAllEmail() {
+        emailService.deleteAllEmail();
+        return "redirect:/";
     }
 }

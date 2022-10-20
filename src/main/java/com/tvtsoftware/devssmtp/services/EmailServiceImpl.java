@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -36,5 +37,17 @@ public class EmailServiceImpl implements EmailService {
         }
         log.info("email not found for id: {}", id);
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void deleteEmailByUID(Long id) {
+        emailRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllEmail() {
+        emailRepository.deleteAll();
     }
 }
