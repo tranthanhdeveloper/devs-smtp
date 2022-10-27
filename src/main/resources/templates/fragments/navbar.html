@@ -4,11 +4,26 @@
 </head>
 
 <body>
-    <nav class="navbar fixed-top navbar-dark bg-primary bg-gradient" th:fragment="navbar">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/"><i class="material-icons">email</i><span>Devs SMTP</span></a>
-            <span class="d-flex navbar-text" th:text="${'Version: ' + @environment.getProperty('devssmtp.app.version')}"></span>
+<nav class="navbar fixed-top navbar-dark bg-primary bg-gradient" th:fragment="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand d-inline-flex align-items-center" href="/"><i class="material-icons">email</i><span>Devs SMTP<small
+                th:text="${'(' + @environment.getProperty('devssmtp.app.version')+')'}"></small></span></a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                About DEVS-SMTP
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="https://ko-fi.com/tranthanhdeveloper">Donate with KO-FI</a></li>
+                <li><a class="dropdown-item" href="https://tranthanhdeveloper.com">Author</a></li>
+                <li><a class="dropdown-item" href="https://github.com/tranthanhdeveloper/devs-smtp">Source
+                    Repository</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="https://programmingsharing.com">Related</a></li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 </body>
 </html>

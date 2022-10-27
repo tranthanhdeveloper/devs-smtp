@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DevSmtpController {
@@ -19,8 +20,8 @@ public class DevSmtpController {
     }
 
     @GetMapping(value = "")
-    public String home(Model model) {
-        Page<Email> emailPage = emailService.getAllEmailWithPaging(0);
+    public String home(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page, Model model) {
+        Page<Email> emailPage = emailService.getAllEmailWithPaging(page);
         model.addAttribute("page", emailPage);
         return "email-list";
     }

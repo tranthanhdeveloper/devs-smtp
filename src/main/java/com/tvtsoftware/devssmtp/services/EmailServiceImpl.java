@@ -3,6 +3,7 @@ package com.tvtsoftware.devssmtp.services;
 import com.tvtsoftware.devssmtp.model.Email;
 import com.tvtsoftware.devssmtp.repository.EmailRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,7 +15,8 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class EmailServiceImpl implements EmailService {
-    private static final int DEFAULT_PAGE_SIZE = 100;
+    @Value(value = "${smtp.server.page-size}")
+    private int defaultPageSize;
     private final EmailRepository emailRepository;
 
     public EmailServiceImpl(EmailRepository emailRepository) {
@@ -23,7 +25,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public Page<Email> getAllEmailWithPaging(int page) {
-        PageRequest pageRequest = PageRequest.of(page, DEFAULT_PAGE_SIZE)
+        PageRequest pageRequest = PageRequest.of(page, defaultPageSize)
                 .withSort(Sort.by(Sort.Direction.DESC, "receivedOn"));
         Page<Email> result = emailRepository.findAll(pageRequest);
         return result;

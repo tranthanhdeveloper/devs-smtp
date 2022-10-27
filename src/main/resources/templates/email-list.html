@@ -12,7 +12,7 @@
                 <div class="alert alert-info" role="alert">There are no received emails.</div>
             </div>
             <div th:if="${page.getTotalElements() > 0}">
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-all-modal"><i
+                <button class="btn btn-danger d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete-all-modal"><i
                         class="material-icons left">delete</i><span>Delete All</span></button>
                 <table class="table table-hover">
                     <thead>
@@ -46,7 +46,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div th:replace="fragments/paginator :: paginator('email', ${page})"></div>
+                <div th:replace="fragments/paginator :: paginator('', ${page})"></div>
             </div>
         </div>
     </div>
