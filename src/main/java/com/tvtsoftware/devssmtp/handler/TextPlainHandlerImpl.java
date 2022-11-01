@@ -6,6 +6,7 @@ import com.tvtsoftware.devssmtp.model.EmailAttachment;
 import com.tvtsoftware.devssmtp.model.EmailContent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.util.MimeMessageParser;
 import org.apache.james.protocols.smtp.MailEnvelope;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,10 @@ import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -29,27 +32,30 @@ public class TextPlainHandlerImpl implements MultipartHandler {
             MimeMessageParser mimeMessageParser = new MimeMessageParser(mimeMessage);
             mimeMessageParser.parse();
 
+            String emailContentRaw = StringUtils.defaultIfEmpty(mimeMessageParser.getHtmlContent(), mimeMessageParser.getPlainContent());
             Email email = new Email();
             email.setSubject(mimeMessageParser.getSubject());
             email.setRaw(IOUtils.toString(mailEnvelope.getMessageInputStream(), StandardCharsets.UTF_8));
-            email.setRawBody(mimeMessageParser.getHtmlContent());
+            email.setRawBody(emailContentRaw);
             email.setReceivedOn(new Date());
             email.setFromAddress(mimeMessageParser.getFrom());
             email.setToAddress(mimeMessageParser.getTo().get(0).toString());
             if (mimeMessageParser.hasAttachments()) {
-                List<DataSource> attachmentList = mimeMessageParser.getAttachmentList();
-                for (DataSource dataSource : attachmentList) {
-                    EmailAttachment attachment = new EmailAttachment();
-                    attachment.setEmail(email);
-                    attachment.setData(dataSource.getInputStream().readAllBytes());
-                    attachment.setFilename(dataSource.getName());
-                    attachment.setContenttype(dataSource.getContentType());
-                    email.addAttachment(attachment);
+                Map<String, DataSource> cidMap = mimeMessageParser.getContentIds().stream()
+                        .collect(Collectors.toMap(Function.identity(), mimeMessageParser::findAttachmentByCid));
+                for (Map.Entry<String, DataSource> attachment : cidMap.entrySet()) {
+                    EmailAttachment emailAttachment = new EmailAttachment();
+                    emailAttachment.setData(attachment.getValue().getInputStream().readAllBytes());
+                    emailAttachment.setEmail(email);
+                    emailAttachment.setFilename(attachment.getValue().getName());
+                    emailAttachment.setContenttype(attachment.getValue().getContentType());
+                    emailAttachment.setContentId(attachment.getKey());
+                    email.addAttachment(emailAttachment);
                 }
             }
             EmailContent emailContent = new EmailContent();
             emailContent.setContentType(ContentType.fromValue(mimeMessage.getContentType().split(";")[0]));
-            emailContent.setData(mimeMessageParser.getHtmlContent());
+            emailContent.setData(emailContentRaw);
             email.addContent(emailContent);
             return email;
         } catch (Exception e) {

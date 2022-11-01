@@ -1,8 +1,8 @@
 package com.tvtsoftware.devssmtp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.Objects;
 
 @Entity
 @Table(name = "email_attachment")
@@ -16,11 +16,15 @@ public class EmailAttachment {
     @JoinColumn(name = "email")
     private Email email;
 
-    @Column(name = "filename", nullable = false, length = 1024)
+    @Column(name = "filename", nullable = true)
     @Basic(optional = false)
     private String filename;
 
-    @Column(name = "content_type", nullable = false, length = 1024)
+    @Column(name = "content_id", nullable = false)
+    @Basic(optional = false)
+    private String contentId;
+
+    @Column(name = "content_type", nullable = false)
     @Basic(optional = false)
     private String contenttype;
 
@@ -37,7 +41,6 @@ public class EmailAttachment {
         this.id = id;
     }
 
-    @JsonIgnore
     public Email getEmail() {
         return email;
     }
@@ -54,6 +57,14 @@ public class EmailAttachment {
         this.filename = filename;
     }
 
+    public String getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
+
     public String getContenttype() {
         return contenttype;
     }
@@ -68,5 +79,20 @@ public class EmailAttachment {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmailAttachment that = (EmailAttachment) o;
+        return Objects.equals(id, that.id) && Objects.equals(email, that.email) && Objects.equals(filename, that.filename) && Objects.equals(contentId, that.contentId) && Objects.equals(contenttype, that.contenttype) && Arrays.equals(data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, email, filename, contentId, contenttype);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
     }
 }

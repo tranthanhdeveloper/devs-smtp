@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 
 public enum ContentType {
     PLAIN("text/plain"),
+    HTML("text/html"),
+    TEXT_XML("text/xml"),
     MULTIPART_ALTERNATIVE("multipart/alternative"),
     MULTIPART_MIXED("multipart/mixed"),
     MULTIPART_RELATED("multipart/related"),

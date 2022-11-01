@@ -7,6 +7,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 @Component
 public class EmailReceivedEventListener {
 
@@ -20,6 +22,7 @@ public class EmailReceivedEventListener {
 
     @Async
     @EventListener(classes = {EmailReceivedEvent.class})
+    @Transactional
     public void onApplicationEvent(EmailReceivedEvent event) {
         Email email = multipartHandler.processEmail(event.getMailEnvelope());
         emailRepository.save(email);

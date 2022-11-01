@@ -39,8 +39,10 @@
                     </ul>
                     <div class="tab-content p-3" id="mail-tabs-content">
                         <div class="tab-pane fade" th:each="c,is : ${mail.contents}" th:id="'mail-content-'+${c.id}" th:classappend="${is.first} ? 'show active' : ''">
-                            <div th:if="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:utext="${mail.rawBody}"></div>
-                            <object th:unless="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:attr="srcdoc=${mail.rawBody}" sandbox="allow-same-origin" onload="resizeIframe(this)"></object>
+                            <div th:if="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).PLAIN }" class="w-100">
+                                <pre th:utext="${#strings.escapeXml(c.data)}"></pre>
+                            </div>
+                            <iframe th:if="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).HTML || c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:attr="srcdoc=${c.data}" sandbox="allow-same-origin" onload="resizeIframe(this)"></iframe>
                         </div>
                         <div class="tab-pane fade" id="mail-content-raw">
                             <pre class="card-content" th:text="${mail.raw}"></pre>

@@ -20,11 +20,11 @@ public class Email {
     @GeneratedValue(generator = "email_generator")
     private Long id;
 
-    @Column(name = "from_address", length = 255, nullable = false)
+    @Column(name = "from_address", nullable = false)
     @Basic(optional = false)
     private String fromAddress;
 
-    @Column(name = "to_address", length = 255, nullable = false)
+    @Column(name = "to_address", nullable = false)
     @Basic(optional = false)
     private String toAddress;
 
