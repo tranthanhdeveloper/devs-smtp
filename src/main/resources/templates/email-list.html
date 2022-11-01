@@ -36,7 +36,9 @@
                             Received On
                         </td>
                         <td th:text="${mail.subject}"></td>
-                        <td>Download</td>
+                        <td>
+                            <a th:href="@{|/email/download/${mail.id}|}">Download</a>
+                        </td>
                         <td>
                             <a th:href="@{|/email/${mail.id}|}"><i class="material-icons">email</i></a>
                         </td>
