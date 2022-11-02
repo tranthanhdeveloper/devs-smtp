@@ -9,6 +9,15 @@ This approach does not require the involvement of an IMAP/POP3 server or any rea
 * ...
 
 ### Configuration
+* ` smtp.server.port` SMTP running port, default  `5025`<br>
+* ` server.port` Web UI server, default 8089 
+
+## Build and Start
+Start from source `./mvnw spring-boot:run`
+
+Jar file support coming soon
+
+Docker support coming soon
 
 
 ### Under the hook of devs-smtp
