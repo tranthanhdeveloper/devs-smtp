@@ -27,4 +27,10 @@ public class EmailReceivedEventListener {
         Email email = multipartHandler.processEmail(event.getMailEnvelope());
         emailRepository.save(email);
     }
+
+    @EventListener(classes = {EmailReceivedEvent.class})
+    @Transactional
+    public void onApplicationEvent1(EmailReceivedEvent event) {
+        System.out.println("haha");
+    }
 }

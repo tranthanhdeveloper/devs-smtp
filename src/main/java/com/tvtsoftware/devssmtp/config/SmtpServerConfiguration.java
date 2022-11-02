@@ -25,7 +25,7 @@ public class SmtpServerConfiguration {
     }
 
     @Bean
-    public Map<String, MultipartHandler> multipartHandlerResolverMap(@Qualifier("textPlainHandlerImpl") MultipartHandler plainTextHandler) {
+    public Map<String, MultipartHandler> multipartHandlerResolverMap(@Qualifier("universalHandlerImpl") MultipartHandler plainTextHandler) {
         Map<String, MultipartHandler> handlerMap = new HashMap<>();
         handlerMap.put("text/plain", plainTextHandler);
         handlerMap.put("multipart/mixed", plainTextHandler);

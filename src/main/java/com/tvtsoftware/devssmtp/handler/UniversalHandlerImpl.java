@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class TextPlainHandlerImpl implements MultipartHandler {
+public class UniversalHandlerImpl implements MultipartHandler {
     @Override
     public Email processEmail(MailEnvelope mailEnvelope) {
         try {
