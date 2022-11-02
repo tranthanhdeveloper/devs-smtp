@@ -9,7 +9,7 @@
         <div class="alert alert-info" role="alert">Can not found the email.</div>
     </div>
 </div>
-<div  th:if="${mail != null}" class="container root">
+<div  th:if="${mail != null}" class="container root app-content">
     <div class="row">
         <div class="col">
             <div class="card">
@@ -42,7 +42,7 @@
                             <div th:if="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).PLAIN }" class="w-100">
                                 <pre th:utext="${#strings.escapeXml(c.data)}"></pre>
                             </div>
-                            <iframe th:if="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).HTML || c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:attr="srcdoc=${c.data}" sandbox="allow-same-origin" onload="resizeIframe(this)"></iframe>
+                            <iframe th:if="${c.contentType == T(com.tvtsoftware.devssmtp.ContentType).HTML || c.contentType == T(com.tvtsoftware.devssmtp.ContentType).MULTIPART_MIXED}" class="w-100" th:attr="srcdoc=${c.data}" sandbox="allow-same-origin allow-scripts" onload="resizeIframe(this)"></iframe>
                         </div>
                         <div class="tab-pane fade" id="mail-content-raw">
                             <pre class="card-content" th:text="${mail.raw}"></pre>

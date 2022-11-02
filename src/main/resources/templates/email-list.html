@@ -4,16 +4,19 @@
 
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
-<div class="container root">
+<div class="container root app-content">
     <div class="row">
         <div class="col">
-            <h1><i class="material-icons">inbox</i>Inbox</h1>
+            <div>
+                <h1><i class="material-icons">inbox</i>Inbox</h1>
+                <button class="btn btn-danger d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete-all-modal"><i
+                        class="material-icons left">delete</i><span>Delete All</span></button>
+            </div>
             <div th:if="${page.getTotalElements() == 0}">
                 <div class="alert alert-info" role="alert">There are no received emails.</div>
             </div>
             <div th:if="${page.getTotalElements() > 0}">
-                <button class="btn btn-danger d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#delete-all-modal"><i
-                        class="material-icons left">delete</i><span>Delete All</span></button>
+
                 <table class="table table-hover">
                     <thead>
                     <tr>
