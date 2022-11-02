@@ -1,35 +1,30 @@
 package com.tvtsoftware.devssmtp.controller;
 
 import com.tvtsoftware.devssmtp.model.Email;
+import com.tvtsoftware.devssmtp.services.DevsSmtpUtils;
 import com.tvtsoftware.devssmtp.services.EmailService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Controller
 public class DevSmtpController {
 
     private final EmailService emailService;
 
-    public DevSmtpController(EmailService emailService) {
+    private final DevsSmtpUtils devsSmtpUtils;
+
+    public DevSmtpController(EmailService emailService, DevsSmtpUtils devsSmtpUtils) {
         this.emailService = emailService;
+        this.devsSmtpUtils = devsSmtpUtils;
     }
 
     @GetMapping(value = "")
@@ -42,6 +37,7 @@ public class DevSmtpController {
     @GetMapping(value = "/email/{id}")
     public String emailDetail(@PathVariable("id") Long id, Model model) {
         Email email = emailService.getEmailByUID(id);
+        email.getContents().forEach(emailContent -> emailContent.setData(devsSmtpUtils.render(emailContent)));
         model.addAttribute("mail", email);
         return "email";
     }

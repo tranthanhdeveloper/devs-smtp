@@ -54,9 +54,6 @@ public class Email {
     @OneToMany(mappedBy = "email", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EmailAttachment> attachments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "email", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<InlineImage> inlineImages = new ArrayList<>();
-
     public Long getId() {
         return id;
     }
@@ -136,20 +133,6 @@ public class Email {
 
     public List<EmailAttachment> getAttachments() {
         return attachments;
-    }
-
-
-    public void addInlineImage(InlineImage inlineImage) {
-        inlineImage.setEmail(this);
-        this.inlineImages.add(inlineImage);
-    }
-
-    public Optional<InlineImage> getInlineImageByContentId(String cid) {
-        return inlineImages.stream().filter(i -> i.getContentId().equals(cid)).findFirst();
-    }
-
-    public List<InlineImage> getInlineImages() {
-        return inlineImages;
     }
 
     @Override

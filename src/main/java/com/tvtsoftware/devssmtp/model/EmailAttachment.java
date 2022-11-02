@@ -16,17 +16,14 @@ public class EmailAttachment {
     @JoinColumn(name = "email")
     private Email email;
 
-    @Column(name = "filename", nullable = true)
-    @Basic(optional = false)
+    @Column(name = "filename")
     private String filename;
 
     @Column(name = "content_id", nullable = false)
-    @Basic(optional = false)
     private String contentId;
 
     @Column(name = "content_type", nullable = false)
-    @Basic(optional = false)
-    private String contenttype;
+    private String contentType;
 
     @Lob
     @Column(name = "data", nullable = false)
@@ -65,12 +62,12 @@ public class EmailAttachment {
         this.contentId = contentId;
     }
 
-    public String getContenttype() {
-        return contenttype;
+    public String getContentType() {
+        return contentType;
     }
 
     public void setContenttype(String contenttype) {
-        this.contenttype = contenttype;
+        this.contentType = contenttype;
     }
 
     public byte[] getData() {
@@ -86,12 +83,12 @@ public class EmailAttachment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmailAttachment that = (EmailAttachment) o;
-        return Objects.equals(id, that.id) && Objects.equals(email, that.email) && Objects.equals(filename, that.filename) && Objects.equals(contentId, that.contentId) && Objects.equals(contenttype, that.contenttype) && Arrays.equals(data, that.data);
+        return Objects.equals(id, that.id) && Objects.equals(email, that.email) && Objects.equals(filename, that.filename) && Objects.equals(contentId, that.contentId) && Objects.equals(contentType, that.contentType) && Arrays.equals(data, that.data);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, email, filename, contentId, contenttype);
+        int result = Objects.hash(id, email, filename, contentId, contentType);
         result = 31 * result + Arrays.hashCode(data);
         return result;
     }
