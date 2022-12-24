@@ -1,6 +1,6 @@
 package com.tvtsoftware.devssmtp.config;
 
-import com.tvtsoftware.devssmtp.handler.MultipartHandler;
+import com.tvtsoftware.devssmtp.handler.EmailHandler;
 import com.tvtsoftware.devssmtp.server.SMTPServer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.james.protocols.api.handler.ProtocolHandler;
@@ -25,8 +25,8 @@ public class SmtpServerConfiguration {
     }
 
     @Bean
-    public Map<String, MultipartHandler> multipartHandlerResolverMap(@Qualifier("universalHandlerImpl") MultipartHandler plainTextHandler) {
-        Map<String, MultipartHandler> handlerMap = new HashMap<>();
+    public Map<String, EmailHandler> multipartHandlerResolverMap(@Qualifier("universalHandlerImpl") EmailHandler plainTextHandler) {
+        Map<String, EmailHandler> handlerMap = new HashMap<>();
         handlerMap.put("text/plain", plainTextHandler);
         handlerMap.put("multipart/mixed", plainTextHandler);
         return handlerMap;

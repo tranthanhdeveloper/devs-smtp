@@ -10,6 +10,4 @@ import java.util.Date;
 @Repository
 public interface EmailRepository extends JpaRepository<Email, Long> {
 
-    @Transactional
-    int deleteEmailByReceivedOnBefore(Date receivedTime);
 }

@@ -7,7 +7,6 @@ import com.tvtsoftware.devssmtp.model.EmailContent;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.regex.MatchResult;
