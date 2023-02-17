@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 @Component
 public class EmailReceivedEventListener{
 
-    private EmailRepository emailRepository;
-    private EmailHandler emailHandler;
+    private final EmailRepository emailRepository;
+    private final EmailHandler emailHandler;
 
     public EmailReceivedEventListener(EmailRepository emailRepository, EmailHandler emailHandler) {
         this.emailRepository = emailRepository;
@@ -26,11 +26,5 @@ public class EmailReceivedEventListener{
     public void onApplicationEvent(EmailReceivedEvent event) {
         Email email = emailHandler.processEmail(event.getMailEnvelope());
         emailRepository.save(email);
-    }
-
-    @EventListener(classes = {EmailReceivedEvent.class})
-    @Transactional
-    public void onApplicationEvent1(EmailReceivedEvent event) {
-        System.out.println("haha");
     }
 }
