@@ -1,6 +1,6 @@
 package com.tvtsoftware.devssmtp.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @MappedSuperclass
 public abstract class EmailPart {

@@ -2,7 +2,7 @@ package com.tvtsoftware.devssmtp.model;
 
 import com.tvtsoftware.devssmtp.ContentType;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "email_content")

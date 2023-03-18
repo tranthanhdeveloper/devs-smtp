@@ -2,8 +2,8 @@ package com.tvtsoftware.devssmtp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tvtsoftware.devssmtp.ContentType;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
