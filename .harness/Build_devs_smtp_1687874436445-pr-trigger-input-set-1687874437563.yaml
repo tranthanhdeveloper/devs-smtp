@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_devs_smtp_1687874436445-pr-trigger-input-set
+  identifier: Build_devs_smtp_1687874436445prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: devssmtp
+  pipeline:
+    identifier: Build_devs_smtp_1687874436445
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
